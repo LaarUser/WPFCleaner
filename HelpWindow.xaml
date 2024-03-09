@@ -1,0 +1,45 @@
+﻿<Window x:Class="WpfProjectCleanerMvvmNet5.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfProjectCleanerMvvmNet5"
+        mc:Ignorable="d"
+        Title="WPF Project Cleaner Help" Height="450" Width="424"
+        ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip" UseLayoutRounding="True">
+    <Window.Resources>
+        <Style x:Key="Heading"  >
+            <Setter Property="Paragraph.FontSize" Value="30"></Setter>
+             <Setter Property="Paragraph.Foreground" Value="Blue"></Setter>
+            <!--<Setter Property="Paragraph.TextDecorations" Value="Underline"></Setter>-->
+            <Setter Property="Paragraph.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="Subheading" >
+            <Setter Property="Paragraph.FontWeight" Value="Bold"></Setter>
+            <Setter Property="Paragraph.TextAlignment" Value="Center"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <FlowDocumentPageViewer >
+            <FlowDocument Background="LightYellow" IsOptimalParagraphEnabled="True" IsHyphenationEnabled="True" >
+                <Paragraph Style="{StaticResource Heading}">
+                    Project Cleaner
+                </Paragraph>
+                <Paragraph Style="{StaticResource Subheading}">
+                    Purpose
+                </Paragraph>
+                <Paragraph>
+                    The purpose of the program is to search all intermediate compiler files created by Visual Studio C++ and GCC compilers. It will search in the selected directory all compiler intermediate files created by C++ and C# compilers. It will also search for intermediate directories that can be deleted as a whole because they contain temporary files created in the compilation process. To begin you will browse to the directory where you save your Visual C# projects or C++ projects. After the directory textbox have a valid directory the search button will be enable to begin the search. Since we do not know how much time the program search will take to complete the progress control will change to a marquee style to indicate that the search is going on. All found files will appear after the search background worker ends. You can stop the search at any time. The program will search beginning at the directory and all subdirectories for all files that have a files extensions selected at the List control. The search and deletion of files will be using a background workers each that can be stop at any time with the stop button. All found files will appear in the listview control selected with a checkmark for deletion. If you press the delete button all selected files will be send to the Recycle bin.
+                </Paragraph>
+                <Paragraph>
+                   We recommend to search directories first checking the checkbox "Check for *.obj" and then delete them. After that Unchecked the Box and repeat the search to find intermediate compiler created files.
+                </Paragraph>
+                <Paragraph>
+                    If you need to add another file extension to the search you will use the More button which will present a simple dialog to enter an extension that you will enter I hope as .ext using the dot part of the extension. I hope you enjoy this program so much as I do. Thanks. Luis A. Ayuso Rivera 3/18/2018
+                </Paragraph>
+
+            </FlowDocument>
+        </FlowDocumentPageViewer>
+    </Grid>
+</Window>

@@ -1,0 +1,34 @@
+[VERSION]
+Project=WpfProjectCleanerMvvmNet5.wxp
+Date=4/21/2020 - 3:04:58 PM
+Description=Windows Presentation Foundation Application Net
+[Application]
+Type=20
+Debug=0
+Library=3
+Unicode=1
+[Files]
+CountofFiles=14
+File0=AddExtension.xaml
+File1=AddExtension.xaml.cs
+File2=App.xaml
+File3=App.xaml.cs
+File4=AssemblyInfo.cs
+File5=Extension.cs
+File6=HelpWindow.xaml
+File7=HelpWindow.xaml.cs
+File8=MainViewModel.cs
+File9=MainWindow.xaml
+File10=MainWindow.xaml.cs
+File11=ViewModelBase.cs
+File12=WpfProjectCleanerMvvmNet5.csproj
+File13=app.manifest
+[Compiler]
+Configuration=AnyCPU
+compilerPreprocessors=
+CompilerOptions=
+Libraries=
+AdditionalLibraries=
+LinkerOptions=
+DirectoriesToSearch=
+ProjectReferences=

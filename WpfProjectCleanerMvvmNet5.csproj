@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!--<UseWindowsForms>true</UseWindowsForms>-->
+    <ApplicationIcon>Viridiana3.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+  </PropertyGroup>
+
+   <ItemGroup>
+    <Resource Include="Images\Add.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Picture.png" />
+    <Resource Include="Images\Search.png" />
+    <Resource Include="Viridiana3.ico" />
+   </ItemGroup>
+<ItemGroup>
+   <None Remove="WpfProjectCleanerMvvmNet5.wxp" />
+ </ItemGroup>
+<!-- <ItemGroup>
+  <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+ </ItemGroup>-->
+</Project>

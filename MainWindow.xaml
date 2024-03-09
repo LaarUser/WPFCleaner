@@ -1,0 +1,133 @@
+﻿<Window x:Class="WpfProjectCleanerMvvmNet5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfProjectCleanerMvvmNet5"
+        xmlns:cvs="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        mc:Ignorable="d" MinWidth="620" MinHeight="380"
+        FontFamily="Verdana" FontSize="14"
+        Title="WPF Project Cleaner" Height="514" Width="734" WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel,IsDesignTimeCreatable=True}"
+        UseLayoutRounding="True" >
+   <Window.DataContext>
+        <local:MainViewModel x:Name="mv"/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Image">
+          <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+         <Style TargetType="GridViewColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+        <!--  <local:ExtensionCol x:Key="Coll"/>-->
+       <CollectionViewSource x:Key="sortlist" Source="{Binding Path=ExtensionCol}" >
+            <CollectionViewSource.SortDescriptions>
+                <cvs:SortDescription PropertyName="Name" Direction="Ascending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap" Text="Directory:" Margin="10,10,0,0" HorizontalAlignment="Left" Width="81" />
+        <TextBox x:Name="txtDirectory" TextWrapping="Wrap" Margin="95,10,101,0" Grid.ColumnSpan="2" Text="{Binding Path, UpdateSourceTrigger=PropertyChanged}" />
+        <Button x:Name="btnBrowse" Content="_Browse"  Grid.Column="1" Margin="5,10,10,0" HorizontalAlignment="Right" Width="79.651" Command="{Binding BrowseCommand}" />
+
+        <ListBox Margin="10,10,0,0" Height="210" x:Name="listAll" Grid.Column="0" Grid.Row="1"  Grid.RowSpan="2"
+           ItemsSource="{Binding Source={StaticResource sortlist}}"   >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Name}" IsChecked="{Binding Checked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Margin="0,10,10,0" Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"   >
+            <Button x:Name="btnSearch" ToolTip="Search files using background worker" Margin="10,5,5,10" Command="{Binding SearchCmd}" ToolTipService.ShowOnDisabled="True">
+                <StackPanel Width="105">
+                    <Image Source="/Images/Search.png" />
+                    <TextBlock  Text="Search" HorizontalAlignment="Center"  />
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnCheckAll"  ToolTip="Check All Extensions"  Margin="10,5,5,10" Command="{Binding CheckAllCommand}">
+                <StackPanel Width="105">
+                    <Image Source="/Images/Picture.png"   />
+                    <TextBlock Text="Check All" HorizontalAlignment="Center"   />
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnUnCheckAll"  ToolTip="UnCheck All Extensions" Margin="10,5,5,10" Command="{Binding UnCheckAllCommand}" >
+                <StackPanel Width="105">
+                    <Image Source="/Images/Add.png" />
+                    <TextBlock Text="Uncheck All"   HorizontalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="btnStop" ToolTip="Stop Search or Stop Delete Background workers"  Margin="10,5,0,10"  ToolTipService.ShowOnDisabled="True" Command="{Binding StopCmd}">
+                <StackPanel Width="105">
+                    <Image Source="/Images/Delete.png" />
+                    <TextBlock Text="Stop" HorizontalAlignment="Center"   />
+                </StackPanel >
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"  Orientation="Vertical" Grid.Row="2" Margin="0,5,0,5"  HorizontalAlignment="Center" Width="477">
+            <CheckBox x:Name="chkObj"  Content="_Check for *.obj, *.ipch, *.tlog and *.vs directories"
+             IsChecked="{Binding BCheckOBJDir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Margin="10" IsEnabled="{Binding CheckEnable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Search for these directories first."  VerticalContentAlignment="Center" HorizontalAlignment="Center" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                <Button x:Name="btnDelete" Content="_Delete" Width="75" Margin="0,0,10,0"  ToolTip="Delete searched files to Recycle bin using background worker" ToolTipService.ShowOnDisabled="True" Command="{Binding DeleteCmd}" Height="35" />
+                <Button x:Name="btnMore" Content="_More" Width="75"   Margin="0,0,10,0" ToolTip="Add more files extensions" ToolTipService.ShowOnDisabled="True" Command="{Binding MoreCommand}" />
+                <Button Content="_Help" Width="75" Command="{Binding HelpCommand}" ToolTip="Show Help file"  />
+            </StackPanel>
+        </StackPanel>
+        <ListView x:Name="listView1" Grid.Row="3" Grid.ColumnSpan="2"  Margin="10"
+          ItemsSource="{Binding TestViewData}"  >
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Selection">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chk" IsChecked="{Binding Check, Mode=TwoWay
+                                    ,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Files" Width="900" DisplayMemberBinding="{Binding File}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StatusBar Grid.Row="4" Grid.ColumnSpan="2" Margin="10,0,10,0"
+                   Background="Beige"  FontFamily="Verdana" FontSize="14">
+            <StatusBarItem>
+                <TextBlock x:Name="toolStripStatusLabel1" Text="{Binding SBText}" Width="184" />
+            </StatusBarItem>
+            <!--<Separator/>-->
+            <StatusBarItem>
+                <Button Content="_Check All" Width="96" Command="{Binding ChechAll}" ToolTip="Check all items from listview" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button Content="_Uncheck All" Width="96" Command="{Binding UnCheckAll}" ToolTip="Uncheck all items from listview" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <ProgressBar x:Name="toolStripProgressBar1"  Value="{Binding PBValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsIndeterminate="{Binding IsINDM, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="20" Width="245" HorizontalAlignment="Left" />
+            </StatusBarItem>
+        </StatusBar>
+
+    </Grid>
+   <!-- <Window.CommandBindings>
+        <CommandBinding Command="Search" Executed="Search_Executed" CanExecute="CanExecute_Search" />
+        <CommandBinding Command="Stop" Executed="Stop_Executed" CanExecute="CanExecute_Stop"/>
+        <CommandBinding Command="Delete" Executed="Delete_Executed" CanExecute="CanExecute_Delete"/>
+        <CommandBinding Command="Find" Executed="Check_Executed" CanExecute="CanExecute_CheckAll"/>
+      <CommandBinding Command="Close" Executed="UnCheck_Executed" CanExecute="CanExecute_UnCheckAll"/>
+    </Window.CommandBindings>-->
+</Window>
